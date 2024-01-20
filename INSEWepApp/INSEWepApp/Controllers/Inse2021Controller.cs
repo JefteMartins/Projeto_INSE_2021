@@ -67,7 +67,8 @@ namespace INSEWepApp.Controllers
 
             if (!string.IsNullOrEmpty(NoEscola))
             {
-                query = query.Where(e => e.NoEscola == NoEscola);
+                query = query.Where(e => e.NoEscola.Contains(NoEscola));
+                query = query.OrderBy(e => e.NoEscola);
             }
 
             if (TpTipoRede.HasValue)

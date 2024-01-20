@@ -20,6 +20,7 @@ ChartJS.register(
 );
 
 export function VerticalBar(props) {
+  console.log('props', props)
   const options = {
     responsive: true,
     plugins: {
@@ -33,7 +34,19 @@ export function VerticalBar(props) {
     },
   };
   
-
+  props.infoData.sort((a, b) => {
+    const stateA = a.state.toLowerCase();
+    const stateB = b.state.toLowerCase();
+  
+    if (stateA < stateB) {
+      return -1;
+    }
+    if (stateA > stateB) {
+      return 1;
+    }
+    return 0;
+  });
+  
   const labels = props.infoData.map((item) => item.state)
 
   const data = {
@@ -47,5 +60,8 @@ export function VerticalBar(props) {
     ],
   };
 
-  return <Bar options={options} data={data} />;
+  return (<>
+    <h1>Escolas participantes: {props.totalCount}</h1>
+    <Bar options={options} data={data} />
+  </>);
 }

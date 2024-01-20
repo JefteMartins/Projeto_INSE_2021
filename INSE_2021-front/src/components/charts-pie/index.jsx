@@ -7,13 +7,27 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 export function ChartsPie(props) {
-  console.log('props', props)
+  //console.log('props', props)
+  //props.infoData.map((item) => item.state)
+  props.data.sort((a, b) => {
+    const classificacaoA = a.inseClassificacao.toLowerCase();
+    const classificacaoB = b.inseClassificacao.toLowerCase();
+  
+    if (classificacaoA < classificacaoB) {
+      return -1;
+    }
+    if (classificacaoA > classificacaoB) {
+      return 1;
+    }
+    return 0;
+  });
+
   const data = {
-    labels: ['% no nível 1', '% no nível 2', '% no nível 3', '% no nível 4', '% no nível 5', '% no nível 6', '% no nível 7', '% no nível 8' ],
+    labels: props.data.map((item) => item.inseClassificacao),
     datasets: [
       {
         label: '%',
-        data: [12, 19, 3, 5, 2, 3, 20, 30],
+        data: props.data.map((item) => item.count),
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -42,5 +56,7 @@ export function ChartsPie(props) {
     ],
   };
 
-  return <Pie data={data} />;
+  return <>
+    <Pie data={data} />
+  </>;
 }
