@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
-import SchoolDetails from "../school-details";
+import { Container } from "./styles";
+import { Modal } from "react-bootstrap";
+import { VerticalBarSchool } from "../charts-vertical-bar-school";
 
 const SEARCH_URI = "https://localhost:7291/api/Inse2021/Search";
 
 export const AsyncSearch = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSearch = (query) => {
     setIsLoading(true);
@@ -24,27 +28,35 @@ export const AsyncSearch = () => {
         setIsLoading(false);
       });
   };
-  var selectedOptions = [];
 
-  const filterBy = () => true;
+  const handleInputChange = (input) => {
+    if (input === "") {
+      // O usuário clicou em uma opção, abre o modal
+      setShowModal(true);
+    }
+  };
 
-  const selectedSchool = (selected) => {
-      if (selected.length > 0) {
-        selectedOptions = selected;
-        console.log("selectedOptions => ", selectedOptions);
-      }
-  }
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSelectOption = (selected) => {
+    setSelectedOption(selected[0]);
+    setShowModal(true);
+  };
 
   return (
-    <>
+    <Container>
+      <h4>Escola:</h4>
       <AsyncTypeahead
-        filterBy={filterBy}
+        filterBy={() => true}
         id="AsyncSearch"
         isLoading={isLoading}
         labelKey="noEscola"
         minLength={4}
         onSearch={handleSearch}
-        onChange={selectedSchool}
+        onChange={handleSelectOption}
+        onInputChange={handleInputChange}
         options={options}
         placeholder="Pesquise por uma escola..."
         renderMenuItemChildren={(option) => (
@@ -53,6 +65,21 @@ export const AsyncSearch = () => {
           </>
         )}
       />
-    </>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Detalhes da Escola</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedOption && (
+            <>
+              <p>No Escola: {selectedOption.noEscola}</p>
+              {/* Adicione mais campos conforme necessário */}
+              <VerticalBarSchool schoolDetails={selectedOption}/>
+            </>
+          )}
+        </Modal.Body>
+      </Modal>
+    </Container>
   );
 };
