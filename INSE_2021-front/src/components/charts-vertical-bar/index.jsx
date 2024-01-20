@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,8 +7,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { Container } from "./styles";
 
 ChartJS.register(
   CategoryScale,
@@ -20,24 +21,24 @@ ChartJS.register(
 );
 
 export function VerticalBar(props) {
-  console.log('props', props)
+  console.log("props", props);
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: "top",
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: "Chart.js Bar Chart",
       },
     },
   };
-  
+
   props.infoData.sort((a, b) => {
     const stateA = a.state.toLowerCase();
     const stateB = b.state.toLowerCase();
-  
+
     if (stateA < stateB) {
       return -1;
     }
@@ -46,22 +47,24 @@ export function VerticalBar(props) {
     }
     return 0;
   });
-  
-  const labels = props.infoData.map((item) => item.state)
+
+  const labels = props.infoData.map((item) => item.state);
 
   const data = {
     labels,
     datasets: [
       {
-        label: 'Quantidade de escola por estado',
+        label: "Quantidade de escola por estado",
         data: props.infoData.map((item) => item.count),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
     ],
   };
 
-  return (<>
-    <h1>Escolas participantes: {props.totalCount}</h1>
-    <Bar options={options} data={data} />
-  </>);
+  return (
+    <Container>
+      <h1>Escolas participantes: {props.totalCount}</h1>
+      <Bar options={options} data={data} />
+    </Container>
+  );
 }
