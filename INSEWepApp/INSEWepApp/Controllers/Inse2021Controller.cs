@@ -233,18 +233,33 @@ namespace INSEWepApp.Controllers
 
             int count = await query.CountAsync();
 
+            //somar o total de alunos
+            var sumQtdAlunosInse = await _context.InseEsc2021s
+                .SumAsync(e => e.QtdAlunosInse);
+
             var countByEstado = await _context.InseEsc2021s
-                .GroupBy(e => e.SgUf)
+                .GroupBy(e => e.NoUf)
                 .Select(group => new
                 {
                     State = group.Key,
                     Count = group.Count()
                 })
                 .ToListAsync();
+            //countby inseClassificação
+            var countByInseClassificacao = await _context.InseEsc2021s
+                .GroupBy(e => e.InseClassificacao)
+                .Select(group => new
+                {
+                    InseClassificacao = group.Key,
+                    Count = group.Count()
+                })
+                .ToListAsync();
             var result = new
             {
                 Count = count,
-                CountByEstado = countByEstado
+                SumQtdAlunosInse = sumQtdAlunosInse,
+                CountByEstado = countByEstado,
+                CountByInseClassificacao = countByInseClassificacao
             };
 
             return Ok(result);
