@@ -8,6 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MainContainer from "./components/main-container";
 import { AsyncSearch } from "./components/async-search";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   //console.log('inseData', inseData)
