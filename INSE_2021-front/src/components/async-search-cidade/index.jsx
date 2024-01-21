@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
-import { Container, SchoolDetails } from "./styles";
+import { Container, SchoolDetails } from "./styles.js";
 import { Modal } from "react-bootstrap";
-import { DoughnutSchool } from "../Doughnut/index.jsx";
-import { DropdownButtonHome } from "../DropdownButtonHome/index.jsx";
-import { AsyncSearchCidade } from "../async-search-cidade";
-import { DropdownEstados } from "../dropdown-estados/index.jsx";
 
 const SEARCH_URI = "https://localhost:7291/api/Inse2021/Search";
 
-export const AsyncSearch = () => {
+export const AsyncSearchCidade = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +16,7 @@ export const AsyncSearch = () => {
     setIsLoading(true);
 
     axios
-      .get(`${SEARCH_URI}?NoEscola=${query}`)
+      .get(`${SEARCH_URI}?NoMunicipio=${query}`)
       .then((resp) => {
         const items = resp.data;
         setOptions(items);
@@ -32,64 +28,74 @@ export const AsyncSearch = () => {
       });
   };
 
+
   const handleCloseModal = () => {
     setShowModal(false);
     setOptions([]);
+
   };
 
   const handleSelectOption = (selected) => {
     setSelectedOption(selected[0]);
-    console.log("abriu");
-    console.log();
-    if (selected.length > 0) {
+    console.log('abriu');
+    console.log(selected);
+    if (selected.length > 0){
       setShowModal(true);
     }
   };
 
+  const removeDuplicateOptions = (options, key) => {
+    const uniqueOptions = [];
+    const uniqueValues = new Set();
+  
+    for (const option of options) {
+      const optionValue = option[key];
+      if (!uniqueValues.has(optionValue)) {
+        uniqueValues.add(optionValue);
+        uniqueOptions.push(option);
+      }
+    }
+  
+    return uniqueOptions;
+  };
+
   return (
     <Container>
-      <DropdownButtonHome />
       <AsyncTypeahead
         filterBy={() => true}
         id="AsyncSearch"
         isLoading={isLoading}
-        labelKey="noEscola"
-        minLength={4}
+        labelKey="noMunicipio"
+        minLength={3}
         onSearch={handleSearch}
         onChange={handleSelectOption}
-        options={options}
-        placeholder="Pesquise por uma escola..."
+        options={removeDuplicateOptions(options, 'noMunicipio')} 
+        placeholder="Pesquise por uma cidade..."
         renderMenuItemChildren={(option) => (
           <>
-            <span>{option.noEscola}</span>
+            <span>{option.noMunicipio}</span>
           </>
         )}
       />
 
       <Modal show={showModal} size="lg" onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Detalhes da Escola</Modal.Title>
+          <Modal.Title>Detalhes da Cidade</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <SchoolDetails>
             {selectedOption && (
               <>
-                <h3>No Escola: {selectedOption.noEscola}</h3>
-                <h6>
-                  Média INSe: {selectedOption.mediaInse} - Classificação{" "}
-                  {selectedOption.inseClassificacao}
-                </h6>
-                <h6>
-                  {selectedOption.noMunicipio} - {selectedOption.sgUf}
-                </h6>
-                <DoughnutSchool schoolDetails={selectedOption} />
+                teste
+                {/* <h3>No Escola: {selectedOption.noEscola}</h3>
+                <h6>Média INSe: {selectedOption.mediaInse} - Classificação {selectedOption.inseClassificacao}</h6>
+                <h6>{selectedOption.noMunicipio} - {selectedOption.sgUf}</h6>
+                <DoughnutSchool schoolDetails={selectedOption} /> */}
               </>
             )}
           </SchoolDetails>
         </Modal.Body>
       </Modal>
-      <AsyncSearchCidade />
-      <DropdownEstados />
     </Container>
   );
 };

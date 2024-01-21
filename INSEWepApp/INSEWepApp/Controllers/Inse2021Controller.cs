@@ -56,7 +56,8 @@ namespace INSEWepApp.Controllers
 
             if (!string.IsNullOrEmpty(NoUf))
             {
-                query = query.Where(e => e.NoUf == NoUf);
+                query = query.Where(e => e.NoUf.Contains(NoUf));
+                query = query.OrderBy(e => e.NoUf);
             }
             if (!string.IsNullOrEmpty(SgUf))
             {
@@ -65,7 +66,8 @@ namespace INSEWepApp.Controllers
 
             if (!string.IsNullOrEmpty(NoMunicipio))
             {
-                query = query.Where(e => e.NoMunicipio == NoMunicipio);
+                query = query.Where(e => e.NoMunicipio.Contains(NoMunicipio));
+                query = query.OrderBy(e => e.NoMunicipio);
             }
 
             if (!string.IsNullOrEmpty(NoEscola))

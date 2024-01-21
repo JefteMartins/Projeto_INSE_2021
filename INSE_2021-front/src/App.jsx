@@ -9,12 +9,13 @@ import Col from "react-bootstrap/Col";
 import MainContainer from "./components/main-container";
 import { AsyncSearch } from "./components/async-search";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { NavbarHome } from "./components/navbar";
 
 function App() {
   //console.log('inseData', inseData)
   return (
     <>
-      <AsyncSearch />
+      <NavbarHome />
       <MainContainer/>
     </>
   );
