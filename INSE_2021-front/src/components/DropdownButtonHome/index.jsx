@@ -1,24 +1,30 @@
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Form from "react-bootstrap/Form";
-import { Container } from "./styles";
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import { Container, FormContainer } from './styles';
+import { AsyncSearch } from '../async-search';
+import { AsyncSearchCidade } from '../async-search-cidade';
+import { DropdownEstados } from '../dropdown-estados';
 
 export const DropdownButtonHome = () => {
-  
+  const [selectedOption, setSelectedOption] = useState('escola');
 
   const handleChange = (e) => {
-    console.log(e.target.value);
-  }; 
+    setSelectedOption(e.target.value);
+  };
 
   return (
     <Container>
-      <Form.Select aria-label="Default select example" defaultValue={'1'} onChange={handleChange}>
+      <FormContainer>
+        <Form.Select aria-label="Default select example" value={selectedOption} onChange={handleChange}>
         <option value="escola">Escola</option>
         <option value="cidade">Cidade</option>
         <option value="estado">Estado</option>
-        <option value="regiao">Região</option>
       </Form.Select>
+      </FormContainer>
+
+      {selectedOption === 'escola' && <AsyncSearch />}
+      {selectedOption === 'cidade' && <AsyncSearchCidade />}
+      {selectedOption === 'estado' && <DropdownEstados />}
     </Container>
   );
 };

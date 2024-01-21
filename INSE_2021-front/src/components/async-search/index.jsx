@@ -48,7 +48,6 @@ export const AsyncSearch = () => {
 
   return (
     <Container>
-      <DropdownButtonHome />
       <AsyncTypeahead
         filterBy={() => true}
         id="AsyncSearch"
@@ -88,8 +87,6 @@ export const AsyncSearch = () => {
           </SchoolDetails>
         </Modal.Body>
       </Modal>
-      <AsyncSearchCidade />
-      <DropdownEstados />
     </Container>
   );
 };
