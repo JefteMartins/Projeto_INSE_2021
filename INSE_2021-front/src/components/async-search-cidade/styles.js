@@ -6,10 +6,6 @@ export const Container = styled.div`
     align-items: center;
     max-width: 100%;
     padding: 10px;
-
-    h4 {
-        margin-right: 10px;
-    }
 `;
 
 export const SchoolDetails = styled.div`

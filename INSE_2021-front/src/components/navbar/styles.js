@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
-export const insideContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #aFa;
+export const TextoIndicativo = styled.h5`
+    color: #050505;
+    text-wrap: nowrap;
+    vertical-align: middle;
+    line-height: 2.7;
+    padding-right: 0.5rem;
 `;
     

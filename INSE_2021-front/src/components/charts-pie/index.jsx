@@ -23,7 +23,7 @@ export function ChartsPie(props) {
     labels: props.data.map((item) => item.inseClassificacao),
     datasets: [
       {
-        label: "%",
+        label: "Quantidade de escolas por nível",
         data: props.data.map((item) => item.count),
         options: {
           maintainAspectRatio: false,

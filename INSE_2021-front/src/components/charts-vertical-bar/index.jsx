@@ -29,7 +29,6 @@ export function VerticalBar(props) {
       },
       title: {
         display: true,
-        text: "Chart.js Bar Chart",
       },
     },
   };

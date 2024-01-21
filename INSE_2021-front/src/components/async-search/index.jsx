@@ -45,24 +45,25 @@ export const AsyncSearch = () => {
   };
 
   return (
-    <Container>
-      <AsyncTypeahead
-        filterBy={() => true}
-        id="AsyncSearch"
-        isLoading={isLoading}
-        labelKey="noEscola"
-        minLength={4}
-        onSearch={handleSearch}
-        onChange={handleSelectOption}
-        options={options}
-        placeholder="Pesquise por uma escola..."
-        renderMenuItemChildren={(option) => (
-          <>
-            <span>{option.noEscola}</span>
-          </>
-        )}
-      />
-
+    <>
+      <Container>
+        <AsyncTypeahead
+          filterBy={() => true}
+          id="AsyncSearch"
+          isLoading={isLoading}
+          labelKey="noEscola"
+          minLength={4}
+          onSearch={handleSearch}
+          onChange={handleSelectOption}
+          options={options}
+          placeholder="Pesquise por uma escola..."
+          renderMenuItemChildren={(option) => (
+            <>
+              <span>{option.noEscola}</span>
+            </>
+          )}
+        />
+      </Container>
       <Modal show={showModal} size="lg" onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Detalhes da Escola</Modal.Title>
@@ -77,7 +78,8 @@ export const AsyncSearch = () => {
                   {selectedOption.inseClassificacao}
                 </h6>
                 <h6>
-                  {selectedOption.noMunicipio} - {selectedOption.sgUf} | Alunos Participantes: {selectedOption.qtdAlunosInse}
+                  {selectedOption.noMunicipio} - {selectedOption.sgUf} | Alunos
+                  Participantes: {selectedOption.qtdAlunosInse}
                 </h6>
                 <DoughnutSchool schoolDetails={selectedOption} />
               </>
@@ -85,6 +87,6 @@ export const AsyncSearch = () => {
           </SchoolDetails>
         </Modal.Body>
       </Modal>
-    </Container>
+    </>
   );
 };

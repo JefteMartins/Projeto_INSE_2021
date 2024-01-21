@@ -35,7 +35,7 @@ export function DoughnutSchool(props) {
     ],
     datasets: [
       {
-        label: "# no nível",
+        label: "% no nível",
         data: [
           nivelPc.pcNivel1,
           nivelPc.pcNivel2,
