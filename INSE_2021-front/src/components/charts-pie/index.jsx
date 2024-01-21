@@ -6,8 +6,6 @@ import { Container } from "./styles";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function ChartsPie(props) {
-  //console.log('props', props)
-  //props.infoData.map((item) => item.state)
   props.data.sort((a, b) => {
     const classificacaoA = a.inseClassificacao.toLowerCase();
     const classificacaoB = b.inseClassificacao.toLowerCase();

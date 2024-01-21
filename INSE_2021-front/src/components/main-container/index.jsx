@@ -23,7 +23,7 @@ export function MainContainer() {
     };
     fetchData();
   }, []);
-  //console.log('inseData', inseData)
+  
   return (
     <GraphicContainer>
       {loading ? (

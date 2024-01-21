@@ -12,7 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavbarHome } from "./components/navbar";
 
 function App() {
-  //console.log('inseData', inseData)
   return (
     <>
       <NavbarHome />

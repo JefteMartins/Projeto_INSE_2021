@@ -21,7 +21,6 @@ ChartJS.register(
 );
 
 export function VerticalBar(props) {
-console.log("props", props);
   const options = {
     responsive: true,
     plugins: {

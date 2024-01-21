@@ -39,8 +39,6 @@ export const AsyncSearch = () => {
 
   const handleSelectOption = (selected) => {
     setSelectedOption(selected[0]);
-    console.log("abriu");
-    console.log();
     if (selected.length > 0) {
       setShowModal(true);
     }

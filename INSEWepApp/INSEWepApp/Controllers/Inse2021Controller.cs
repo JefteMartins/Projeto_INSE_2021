@@ -201,7 +201,7 @@ namespace INSEWepApp.Controllers
 
                     double? mediaEstado = consulta.Average(e => GetPcNivelValue(e, nivel));
 
-                    resultados[$"PcNivel{nivel}"] = mediaEstado;
+                    resultados[$"pcNivel{nivel}"] = mediaEstado;
                 }
             }
             else
@@ -215,7 +215,7 @@ namespace INSEWepApp.Controllers
 
                     double? mediaEstado = consulta.Average(e => GetPcNivelValue(e, nivel));
 
-                    resultados[$"PcNivel{nivel}"] = mediaEstado;
+                    resultados[$"pcNivel{nivel}"] = mediaEstado;
                 }
             }
 

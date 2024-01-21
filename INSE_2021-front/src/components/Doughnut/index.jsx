@@ -8,7 +8,6 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function DoughnutSchool(props) {
-  console.log("props", props);
   const options = {
     responsive: true,
     plugins: {
@@ -22,17 +21,7 @@ export function DoughnutSchool(props) {
     },
   };
 
-  //const labels = props.infoData.map((item) => item.state);
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
-  const nivelPcEscola = props.schoolDetails;
+  const nivelPc = props.schoolDetails;
   const data = {
     labels: [
       "Nível 1",
@@ -48,14 +37,14 @@ export function DoughnutSchool(props) {
       {
         label: "# no nível",
         data: [
-          nivelPcEscola.pcNivel1,
-          nivelPcEscola.pcNivel2,
-          nivelPcEscola.pcNivel3,
-          nivelPcEscola.pcNivel4,
-          nivelPcEscola.pcNivel5,
-          nivelPcEscola.pcNivel6,
-          nivelPcEscola.pcNivel7,
-          nivelPcEscola.pcNivel8,
+          nivelPc.pcNivel1,
+          nivelPc.pcNivel2,
+          nivelPc.pcNivel3,
+          nivelPc.pcNivel4,
+          nivelPc.pcNivel5,
+          nivelPc.pcNivel6,
+          nivelPc.pcNivel7,
+          nivelPc.pcNivel8,
         ],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
@@ -85,7 +74,7 @@ export function DoughnutSchool(props) {
 
   return (
     <Container>
-      <h4>Distribuição dos níveis da escola selecionada:</h4>
+      <h4>Distribuição dos níveis da localidade selecionada:</h4>
       <Doughnut data={data} />
     </Container>
   );

@@ -1,12 +1,25 @@
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Container, InsideContainer } from "./styles";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 export const DropdownEstados = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   const handleChange = (e) => {
-    console.log(e.target.value);
+    const selectedValue = e.target.value;
+    setSelectedOption(selectedValue);
+
+    // Se a opção for selecionada, exibir o modal
+    if (selectedValue) {
+      setShowModal(true);
+    }
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
   };
 
   return (
@@ -14,7 +27,6 @@ export const DropdownEstados = () => {
       <InsideContainer>
         <Form.Select
           aria-label="Default select example"
-          defaultValue={"1"}
           onChange={handleChange}
         >
           <option value="AC">AC</option>
@@ -45,6 +57,21 @@ export const DropdownEstados = () => {
           <option value="SE">SE</option>
           <option value="TO">TO</option>
         </Form.Select>
+
+        <Modal show={showModal} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal de Exemplo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Você selecionou o estado: {selectedOption}
+            {/* Adicione qualquer conteúdo adicional aqui conforme necessário */}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </InsideContainer>
     </Container>
   );
