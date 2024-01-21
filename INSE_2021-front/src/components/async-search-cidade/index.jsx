@@ -50,6 +50,16 @@ export const AsyncSearchCidade = () => {
           console.error("Erro na solicitação:", error);
         });
 
+      axios
+        .get(
+          `${SEARCH_URI}SearchCount?NoMunicipio=${selected[0].noMunicipio}`
+        )
+        .then((resp) => {
+          setSearchDetails(resp.data);
+        })
+        .catch((error) => {
+          console.error("Erro na solicitação:", error);
+        });
         
     }
   };
@@ -98,6 +108,7 @@ export const AsyncSearchCidade = () => {
               {selectedOption && (
                 <>
                   <h3>Cidade: {selectedOption.noMunicipio}</h3>
+                  <h4>Escolas Participantes: {searchDetails.count}</h4>
                   <DoughnutSchool schoolDetails={selectedOptionDetails} />
                 </>
               )}

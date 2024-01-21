@@ -12,6 +12,7 @@ export const DropdownEstados = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedOptionDetails, setSelectedOptionDetails] = useState([]);
+  const [searchDetails, setSearchDetails] = useState([]);
 
   const handleChange = (e) => {
     const selectedValue = e.target.value;
@@ -25,7 +26,17 @@ export const DropdownEstados = () => {
       .catch((error) => {
         console.error("Erro na solicitação:", error);
       });
-    console.log(selectedOptionDetails);
+
+      axios
+      .get(
+        `${SEARCH_URI}SearchCount?SgUf=${selectedValue}`
+      )
+      .then((resp) => {
+        setSearchDetails(resp.data);
+      })
+      .catch((error) => {
+        console.error("Erro na solicitação:", error);
+      });
 
     if (selectedValue) {
       setShowModal(true);
@@ -84,6 +95,7 @@ export const DropdownEstados = () => {
               {selectedOption && (
                 <>
                   <h3>Estado: {selectedOption}</h3>
+                  <h4>Escolas Participantes: {searchDetails.count}</h4>
                   <DoughnutSchool schoolDetails={selectedOptionDetails} />
                 </>
               )}

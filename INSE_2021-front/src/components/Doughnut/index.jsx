@@ -8,7 +8,6 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function DoughnutSchool(props) {
-  console.log('props ',props);
   const options = {
     responsive: true,
     plugins: {

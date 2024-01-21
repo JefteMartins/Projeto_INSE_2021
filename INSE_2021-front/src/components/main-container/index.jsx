@@ -9,7 +9,8 @@ import {
   Container,
   GraphicPie,
   RegiaoGraphic,
-  Title
+  Title,
+  SpinnerContainer,
 } from "./styles";
 import { DoughnutSchool } from "../Doughnut";
 
@@ -35,13 +36,14 @@ export function MainContainer() {
     };
     fetchData();
   }, []);
-  console.log("media", mediaRegioes);
   return (
     <GraphicContainer>
       {loading ? (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        <SpinnerContainer>
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </SpinnerContainer>
       ) : (
         <Container>
           <Graphic>
