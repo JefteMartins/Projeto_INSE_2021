@@ -18,8 +18,6 @@ namespace INSEWepApp.Controllers
         {
             return await _context.InseEsc2021s.ToListAsync();
         }
-
-        // get utilizando o NO_UF
         [HttpGet("{NoUf}")]
         public async Task<ActionResult<IEnumerable<InseEsc2021>>> GetInse2021(string NoUf)
         {
@@ -161,28 +159,62 @@ namespace INSEWepApp.Controllers
         }
 
         [HttpGet]
-        [Route("MediasPorEstado")]
-        public async Task<ActionResult<object>> MediasPorEstado(string estado)
+        [Route("MediasPorLocalidade")]
+        public async Task<ActionResult<object>> MediasPorLocalidade(
+            string? estado,
+            string? cidade
+            )
         {
-            var resultado = await CalcularMediaEstado(estado);
+            var resultado = new Dictionary<string, double?>();
+
+            if (!string.IsNullOrEmpty(cidade))
+            {
+                resultado = await CalcularMediaLocalidade(cidade, false);
+
+                return Ok(resultado);
+            }
+            if (!string.IsNullOrEmpty(estado))
+            {
+                resultado = await CalcularMediaLocalidade(estado, true);
+
+                return Ok(resultado);
+            }
+            
 
             return Ok(resultado);
         }
 
-        private async Task<Dictionary<string, double?>> CalcularMediaEstado(string estado)
+        private async Task<Dictionary<string, double?>> CalcularMediaLocalidade(string estado, bool uf)
         {
             var resultados = new Dictionary<string, double?>();
 
-            foreach (var nivel in Enumerable.Range(1, 8))
+            if (uf)
             {
-                var consulta = _context.InseEsc2021s
-                    .Where(e => e.SgUf == estado)
-                    .ToList()
-                    .Where(e => GetPcNivelValue(e, nivel).HasValue);
+                foreach (var nivel in Enumerable.Range(1, 8))
+                {
+                    var consulta = _context.InseEsc2021s
+                        .Where(e => e.SgUf == estado)
+                        .ToList()
+                        .Where(e => GetPcNivelValue(e, nivel).HasValue);
 
-                double? mediaEstado = consulta.Average(e => GetPcNivelValue(e, nivel));
+                    double? mediaEstado = consulta.Average(e => GetPcNivelValue(e, nivel));
 
-                resultados[$"PcNivel{nivel}"] = mediaEstado;
+                    resultados[$"PcNivel{nivel}"] = mediaEstado;
+                }
+            }
+            else
+            {
+                foreach (var nivel in Enumerable.Range(1, 8))
+                {
+                    var consulta = _context.InseEsc2021s
+                        .Where(e => e.NoMunicipio == estado)
+                        .ToList()
+                        .Where(e => GetPcNivelValue(e, nivel).HasValue);
+
+                    double? mediaEstado = consulta.Average(e => GetPcNivelValue(e, nivel));
+
+                    resultados[$"PcNivel{nivel}"] = mediaEstado;
+                }
             }
 
             return resultados;
@@ -386,7 +418,6 @@ namespace INSEWepApp.Controllers
 
             int count = await query.CountAsync();
 
-            //somar o total de alunos
             var sumQtdAlunosInse = await _context.InseEsc2021s
                 .SumAsync(e => e.QtdAlunosInse);
 
@@ -398,7 +429,7 @@ namespace INSEWepApp.Controllers
                     Count = group.Count()
                 })
                 .ToListAsync();
-            //countby inseClassificação
+
             var countByInseClassificacao = await _context.InseEsc2021s
                 .GroupBy(e => e.InseClassificacao)
                 .Select(group => new
