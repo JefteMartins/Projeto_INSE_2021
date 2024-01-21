@@ -11,3 +11,11 @@ export const Container = styled.div`
         margin-right: 10px;
     }
 `;
+
+export const SchoolDetails = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;

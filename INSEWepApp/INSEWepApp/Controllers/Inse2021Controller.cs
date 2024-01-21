@@ -46,9 +46,14 @@ namespace INSEWepApp.Controllers
             double? PcNivel5 = null,
             double? PcNivel6 = null,
             double? PcNivel7 = null,
-            double? PcNivel8 = null
+            double? PcNivel8 = null,
+            bool? countNordeste = null,
+            bool? countNorte = null,
+            bool? countSudeste = null,
+            bool? countSul = null,
+            bool? countCentroOeste = null
         )
-        {
+       {
             IQueryable<InseEsc2021> query = _context.InseEsc2021s;
 
             if (!string.IsNullOrEmpty(NoUf))
@@ -105,17 +110,49 @@ namespace INSEWepApp.Controllers
             {
                 query = query.Where(e => e.PcNivel1 == PcNivel1);
             }
+            if (countNordeste.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "AL" || e.SgUf == "BA" || e.SgUf == "CE" || e.SgUf == "MA" || e.SgUf == "PB" || e.SgUf == "PE" || e.SgUf == "PI" || e.SgUf == "RN" || e.SgUf == "SE");
+            }
+            if (countNorte.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "AC" || e.SgUf == "AP" || e.SgUf == "AM" || e.SgUf == "PA" || e.SgUf == "RO" || e.SgUf == "RR" || e.SgUf == "TO");
+            }
+            if (countSudeste.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "ES" || e.SgUf == "MG" || e.SgUf == "RJ" || e.SgUf == "SP");
+            }
+            if (countSul.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "PR" || e.SgUf == "RS" || e.SgUf == "SC");
 
-            // Adicione mais condições conforme necessário para as outras propriedades
+            }
+            if (countCentroOeste.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "DF" || e.SgUf == "GO" || e.SgUf == "MT" || e.SgUf == "MS");
+            }
 
-            // Projeção para retornar apenas as propriedades desejadas
             var result = await query
                 .Select(e => new
                 {
                     e.NoUf,
+                    e.SgUf,
                     e.NoMunicipio,
                     e.NoEscola,
-                    // Adicione mais propriedades conforme necessário
+                    e.TpTipoRede,
+                    e.TpLocalizacao,
+                    e.TpCapital,
+                    e.QtdAlunosInse,
+                    e.MediaInse,
+                    e.InseClassificacao,
+                    e.PcNivel1,
+                    e.PcNivel2,
+                    e.PcNivel3,
+                    e.PcNivel4,
+                    e.PcNivel5,
+                    e.PcNivel6,
+                    e.PcNivel7,
+                    e.PcNivel8
                 })
                 .ToListAsync();
 
@@ -124,10 +161,8 @@ namespace INSEWepApp.Controllers
 
         [HttpGet]
         [Route("SearchCount")]
-
         public async Task<ActionResult<IEnumerable<object>>> SearchCount(
         string? NoUf = null,
-        bool? countPais = null,
         string? SgUf = null,
         string? NoMunicipio = null,
         string? NoEscola = null,
@@ -144,7 +179,12 @@ namespace INSEWepApp.Controllers
         double? PcNivel5 = null,
         double? PcNivel6 = null,
         double? PcNivel7 = null,
-        double? PcNivel8 = null
+        double? PcNivel8 = null,
+        bool? countNordeste = null,
+        bool? countNorte = null,
+        bool? countSudeste = null,
+        bool? countSul = null,
+        bool? countCentroOeste = null
         )
         {
             IQueryable<InseEsc2021> query = _context.InseEsc2021s;
@@ -202,7 +242,6 @@ namespace INSEWepApp.Controllers
             {
                 query = query.Where(e => e.PcNivel1 < PcNivel1);
             }
-            //adicionar outros PcNivel
             if (PcNivel2.HasValue)
             {
                 query = query.Where(e => e.PcNivel2 < PcNivel2);
@@ -230,6 +269,26 @@ namespace INSEWepApp.Controllers
             if (PcNivel8.HasValue)
             {
                 query = query.Where(e => e.PcNivel8 < PcNivel8);
+            }
+            if (countNordeste.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "AL" || e.SgUf == "BA" || e.SgUf == "CE" || e.SgUf == "MA" || e.SgUf == "PB" || e.SgUf == "PE" || e.SgUf == "PI" || e.SgUf == "RN" || e.SgUf == "SE");
+            }
+            if (countNorte.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "AC" || e.SgUf == "AP" || e.SgUf == "AM" || e.SgUf == "PA" || e.SgUf == "RO" || e.SgUf == "RR" || e.SgUf == "TO");
+            }
+            if (countSudeste.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "ES" || e.SgUf == "MG" || e.SgUf == "RJ" || e.SgUf == "SP");
+            }
+            if (countSul.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "PR" || e.SgUf == "RS" || e.SgUf == "SC");
+            }
+            if (countCentroOeste.HasValue)
+            {
+                query = query.Where(e => e.SgUf == "DF" || e.SgUf == "GO" || e.SgUf == "MT" || e.SgUf == "MS");
             }
 
             int count = await query.CountAsync();
@@ -264,8 +323,8 @@ namespace INSEWepApp.Controllers
             };
 
             return Ok(result);
-       
+
         }
-        
+
     }
 }

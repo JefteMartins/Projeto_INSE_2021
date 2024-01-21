@@ -7,7 +7,7 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export function VerticalBarSchool(props) {
+export function DoughnutSchool(props) {
   console.log("props", props);
   const options = {
     responsive: true,
@@ -33,7 +33,6 @@ export function VerticalBarSchool(props) {
     "July",
   ];
   const nivelPcEscola = props.schoolDetails;
-  console.log(props.schoolDetails.pcNivel1);
   const data = {
     labels: [
       "Nível 1",
@@ -47,7 +46,7 @@ export function VerticalBarSchool(props) {
     ],
     datasets: [
       {
-        label: "# of Votes",
+        label: "# no nível",
         data: [
           nivelPcEscola.pcNivel1,
           nivelPcEscola.pcNivel2,
@@ -66,6 +65,7 @@ export function VerticalBarSchool(props) {
           "rgba(153, 102, 255, 0.2)",
           "rgba(255, 159, 64, 0.2)",
           "rgba(170, 255, 185, 0.2)",
+          "rgba(113, 105, 235, 0.2)",
         ],
         borderColor: [
           "rgba(255, 99, 132, 1)",
@@ -74,6 +74,9 @@ export function VerticalBarSchool(props) {
           "rgba(75, 192, 192, 1)",
           "rgba(153, 102, 255, 1)",
           "rgba(255, 159, 64, 1)",
+          "rgba(170, 255, 185, 1)",
+          "rgba(113, 105, 235, 1)",
+
         ],
         borderWidth: 1,
       },

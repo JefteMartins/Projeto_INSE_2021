@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
-import { Container } from "./styles";
+import { Container, SchoolDetails } from "./styles";
 import { Modal } from "react-bootstrap";
-import { VerticalBarSchool } from "../charts-vertical-bar-school";
+import { DoughnutSchool } from "../Doughnut/index.jsx";
 
 const SEARCH_URI = "https://localhost:7291/api/Inse2021/Search";
 
@@ -29,20 +29,20 @@ export const AsyncSearch = () => {
       });
   };
 
-  const handleInputChange = (input) => {
-    if (input === "") {
-      // O usuário clicou em uma opção, abre o modal
-      setShowModal(true);
-    }
-  };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setOptions([]);
+
   };
 
   const handleSelectOption = (selected) => {
     setSelectedOption(selected[0]);
-    setShowModal(true);
+    console.log('abriu');
+    console.log();
+    if (selected.length > 0){
+      setShowModal(true);
+    }
   };
 
   return (
@@ -56,7 +56,6 @@ export const AsyncSearch = () => {
         minLength={4}
         onSearch={handleSearch}
         onChange={handleSelectOption}
-        onInputChange={handleInputChange}
         options={options}
         placeholder="Pesquise por uma escola..."
         renderMenuItemChildren={(option) => (
@@ -66,18 +65,21 @@ export const AsyncSearch = () => {
         )}
       />
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} size="lg" onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Detalhes da Escola</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedOption && (
-            <>
-              <p>No Escola: {selectedOption.noEscola}</p>
-              {/* Adicione mais campos conforme necessário */}
-              <VerticalBarSchool schoolDetails={selectedOption}/>
-            </>
-          )}
+          <SchoolDetails>
+            {selectedOption && (
+              <>
+                <h3>No Escola: {selectedOption.noEscola}</h3>
+                <h6>Média INSe: {selectedOption.mediaInse} - Classificação {selectedOption.inseClassificacao}</h6>
+                <h6>{selectedOption.noMunicipio} - {selectedOption.sgUf}</h6>
+                <DoughnutSchool schoolDetails={selectedOption} />
+              </>
+            )}
+          </SchoolDetails>
         </Modal.Body>
       </Modal>
     </Container>
