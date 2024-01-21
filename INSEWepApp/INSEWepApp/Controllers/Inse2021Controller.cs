@@ -53,7 +53,7 @@ namespace INSEWepApp.Controllers
             bool? countSul = null,
             bool? countCentroOeste = null
         )
-       {
+        {
             IQueryable<InseEsc2021> query = _context.InseEsc2021s;
 
             if (!string.IsNullOrEmpty(NoUf))
@@ -156,7 +156,100 @@ namespace INSEWepApp.Controllers
                 })
                 .ToListAsync();
 
+
             return result;
+        }
+
+        [HttpGet]
+        [Route("MediasPorEstado")]
+        public async Task<ActionResult<object>> MediasPorEstado(string estado)
+        {
+            var resultado = await CalcularMediaEstado(estado);
+
+            return Ok(resultado);
+        }
+
+        private async Task<Dictionary<string, double?>> CalcularMediaEstado(string estado)
+        {
+            var resultados = new Dictionary<string, double?>();
+
+            foreach (var nivel in Enumerable.Range(1, 8))
+            {
+                var consulta = _context.InseEsc2021s
+                    .Where(e => e.SgUf == estado)
+                    .ToList()
+                    .Where(e => GetPcNivelValue(e, nivel).HasValue);
+
+                double? mediaEstado = consulta.Average(e => GetPcNivelValue(e, nivel));
+
+                resultados[$"PcNivel{nivel}"] = mediaEstado;
+            }
+
+            return resultados;
+        }
+
+
+
+        [HttpGet]
+        [Route("MediasRegioes")]
+        public async Task<ActionResult<IEnumerable<object>>> MediasRegioes()
+        {
+            var mediaNordeste = await CalcularMediaRegiao("AL", "BA", "CE", "MA", "PB", "PE", "PI", "RN", "SE");
+            var mediaNorte = await CalcularMediaRegiao("AC", "AP", "AM", "PA", "RO", "RR", "TO");
+            var mediaSudeste = await CalcularMediaRegiao("ES", "MG", "RJ", "SP");
+            var mediaSul = await CalcularMediaRegiao("PR", "RS", "SC");
+            var mediaCentroOeste = await CalcularMediaRegiao("DF", "GO", "MT", "MS");
+
+            var resultado = new
+            {
+                MediaNordeste = mediaNordeste,
+                MediaNorte = mediaNorte,
+                MediaSudeste = mediaSudeste,
+                MediaSul = mediaSul,
+                MediaCentroOeste = mediaCentroOeste
+            };
+
+            return Ok(resultado);
+        }
+
+        private async Task<Dictionary<string, Dictionary<string, double?>>> CalcularMediaRegiao(params string[] estados)
+        {
+            var resultados = new Dictionary<string, Dictionary<string, double?>>();
+
+            foreach (var nivel in Enumerable.Range(1, 8))
+            {
+                var consulta = _context.InseEsc2021s
+                    .Where(e => estados.Contains(e.SgUf))
+                    .ToList()
+                    .Where(e => GetPcNivelValue(e, nivel).HasValue);
+
+                double? mediaRegiao = consulta.Average(e => GetPcNivelValue(e, nivel));
+
+                resultados[$"PcNivel{nivel}"] = new Dictionary<string, double?>
+        {
+            { "Media", mediaRegiao }
+        };
+            }
+
+            return resultados;
+        }
+
+
+
+        private double? GetPcNivelValue(InseEsc2021 item, int nivel)
+        {
+            switch (nivel)
+            {
+                case 1: return item.PcNivel1;
+                case 2: return item.PcNivel2;
+                case 3: return item.PcNivel3;
+                case 4: return item.PcNivel4;
+                case 5: return item.PcNivel5;
+                case 6: return item.PcNivel6;
+                case 7: return item.PcNivel7;
+                case 8: return item.PcNivel8;
+                default: return null;
+            }
         }
 
         [HttpGet]
