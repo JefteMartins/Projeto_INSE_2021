@@ -12,6 +12,39 @@ export const GraphicContainer = styled.div`
 `;
 
 export const Graphic = styled.div`
-    width: 45%;
+    width: 60%;
     height: 100%;
+`;
+
+export const GraphicPie = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+`;
+
+
+export const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+`;
+
+export const RegiaoGraphic = styled.div`
+    width: 40%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3rem;
+`;
+
+export const Title = styled.h1`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3rem;
 `;

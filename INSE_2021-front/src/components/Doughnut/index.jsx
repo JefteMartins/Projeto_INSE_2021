@@ -8,6 +8,7 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function DoughnutSchool(props) {
+  console.log('props ',props);
   const options = {
     responsive: true,
     plugins: {
@@ -74,7 +75,8 @@ export function DoughnutSchool(props) {
 
   return (
     <Container>
-      <h4>Distribuição dos níveis da localidade selecionada:</h4>
+      <h4>{props.localidade}</h4>
+      <h6>Dados em %</h6>
       <Doughnut data={data} />
     </Container>
   );

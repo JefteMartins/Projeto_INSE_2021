@@ -163,7 +163,7 @@ namespace INSEWepApp.Controllers
         [HttpGet]
         [Route("MediasPorLocalidade")]
         public async Task<ActionResult<object>> MediasPorLocalidade(
-            string? estado,
+            string? siglaEstado,
             string? cidade
             )
         {
@@ -175,9 +175,9 @@ namespace INSEWepApp.Controllers
 
                 return Ok(resultado);
             }
-            if (!string.IsNullOrEmpty(estado))
+            if (!string.IsNullOrEmpty(siglaEstado))
             {
-                resultado = await CalcularMediaLocalidade(estado, true);
+                resultado = await CalcularMediaLocalidade(siglaEstado, true);
 
                 return Ok(resultado);
             }
@@ -246,9 +246,9 @@ namespace INSEWepApp.Controllers
             return Ok(resultado);
         }
 
-        private async Task<Dictionary<string, Dictionary<string, double?>>> CalcularMediaRegiao(params string[] estados)
+        private async Task<Dictionary<string, double?>> CalcularMediaRegiao(params string[] estados)
         {
-            var resultados = new Dictionary<string, Dictionary<string, double?>>();
+            var resultados = new Dictionary<string, double?>();
 
             foreach (var nivel in Enumerable.Range(1, 8))
             {
@@ -259,10 +259,7 @@ namespace INSEWepApp.Controllers
 
                 double? mediaRegiao = consulta.Average(e => GetPcNivelValue(e, nivel));
 
-                resultados[$"PcNivel{nivel}"] = new Dictionary<string, double?>
-        {
-            { "Media", mediaRegiao }
-        };
+                resultados[$"pcNivel{nivel}"] = mediaRegiao;
             }
 
             return resultados;

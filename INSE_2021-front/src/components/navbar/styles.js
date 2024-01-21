@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-const insideContainer = styled.div`
-    /* Add your styles here */
+export const insideContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #aFa;
 `;
-
-export default insideContainer;
+    

@@ -73,11 +73,11 @@ export const AsyncSearch = () => {
               <>
                 <h3>No Escola: {selectedOption.noEscola}</h3>
                 <h6>
-                  Média INSe: {selectedOption.mediaInse} - Classificação{" "}
+                  Média INSe: {selectedOption.mediaInse} - Classificação
                   {selectedOption.inseClassificacao}
                 </h6>
                 <h6>
-                  {selectedOption.noMunicipio} - {selectedOption.sgUf}
+                  {selectedOption.noMunicipio} - {selectedOption.sgUf} | Alunos Participantes: {selectedOption.qtdAlunosInse}
                 </h6>
                 <DoughnutSchool schoolDetails={selectedOption} />
               </>

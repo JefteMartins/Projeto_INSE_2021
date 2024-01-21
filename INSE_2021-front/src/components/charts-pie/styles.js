@@ -5,4 +5,8 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     max-width: 70%;
+
+    h1 {
+        text-align: center;
+    } 
 `;

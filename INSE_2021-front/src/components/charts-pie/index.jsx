@@ -57,7 +57,7 @@ export function ChartsPie(props) {
 
   return (
     <Container>
-      <h1>Distribuição de escolas por nível</h1>
+      <h1>Distribuição de Escolas por nível</h1>
       <Pie data={data} />
     </Container>
   );

@@ -62,7 +62,7 @@ export function VerticalBar(props) {
 
   return (
     <Container>
-      <h1>Escolas participantes: {props.totalCount}</h1>
+      <h1>Escolas Participantes: {props.totalCount}</h1>
       <Bar options={options} data={data} />
     </Container>
   );
