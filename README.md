@@ -14,7 +14,7 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em s
 
 ## Configuração do Banco de Dados
 
-1. Para importar os dados INSE_2021_escolas_1.xlsx para seu banco SQL
+1. Importar os dados INSE_2021_escolas_1.xlsx para seu banco SQL
 2. [https://learn.microsoft.com/pt-br/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16](Instale o SQL Server Management Studio)
 
 Você pode conferir como realizar iso por meio das ferramentas de importação seguindo este vídeo <br/>
