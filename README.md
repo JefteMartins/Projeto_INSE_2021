@@ -1,5 +1,3 @@
-# Teste_Great_INSE2021
-
 
 # Projeto de Dados INSE 2021
 
