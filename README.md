@@ -11,6 +11,7 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em s
 - [npm](https://www.npmjs.com/) (v6.x ou superior)
 - [.NET SDK](https://dotnet.microsoft.com/download/dotnet/6.0) (v6.x ou superior)
 - [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/pt-br/vs/)
 
 ## Configuração do Banco de Dados
 
